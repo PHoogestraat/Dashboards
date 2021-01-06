@@ -1,6 +1,6 @@
 // 
 //const url = "samples.json"
-//var samples = 940
+var sample940 = 940
 //function buildPlot() {
     // Fetch the JSON data and send to console log. This will contain entire data set
     d3.json("samples.json").then(function(data) {
@@ -21,7 +21,23 @@
           console.log(`select id value: ${selectID}`);
          
       });
+// get metadata for id
+function mData(){
+  
+    // Grab values from the data json object to build the plots
+        var id = mData.metadata.id;
+        var ethnicity = mData.metadata.ethnicity;
+        var startDate = mData.metadata.gender;
+        var location = mData.metadata.location;
+        var bbtype = mData.metadata.bbtype;
+        var wfreq = mData.metadata.wfreq;
+    // Associate data from above with key pair below
 
+
+    // ##### html target where data above must be placed
+
+    //<div id="sample-metadata" class="panel-body"></div>    
+}
       
 
 
