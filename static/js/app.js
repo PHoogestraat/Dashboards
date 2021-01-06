@@ -2,7 +2,7 @@
 //const url = "samples.json"
 //var samples = 940
 //function buildPlot() {
-    // Fetch the JSON data and send to console log. This will contoin entire data set
+    // Fetch the JSON data and send to console log. This will contain entire data set
     d3.json("samples.json").then(function(data) {
         console.log(data);
     // appends name:id to html <select> and appeds each id number as an option
@@ -21,7 +21,10 @@
           console.log(`select id value: ${selectID}`);
          
       });
+
       
+
+
 // sets up bar plot
 function buildPlot(samples){ 
         d3.select ("#bar").html("") 
@@ -87,5 +90,11 @@ function buildPlot(samples){
                       
     
     console.log(`sample_values:${sampleValues.sample_values}`);
+
+
+
+
 };
         
+
+  
