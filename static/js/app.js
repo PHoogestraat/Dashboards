@@ -1,27 +1,27 @@
 // 
-//const url = "samples.json"
-var sample940 = 940
-//function buildPlot() {
-    // Fetch the JSON data and send to console log. This will contain entire data set
-    d3.json("samples.json").then(function(data) {
-        console.log(data);
-    // appends name:id to html <select> and appeds each id number as an option
-        data.names.forEach(i => 
-          d3.select("select").append("option").text(i )
-          );
-          // pulls value from pull down menu
-          // ****************************************************
-          // this is the hangup!!!!!!!! selectID is set to 940 = sample
-          var selectID = d3.select("#selDataset").property("value");
-          // exacutes buildPlot function based on selectID input
-          // selectID = samples (which is static 940)
-          // problem is may also be here 
-          d3.select("#selDataset").on("change", buildPlot(selectID));
-        
-          console.log(`select id value: ${selectID}`);
-         
-      });
-// get metadata for id
+//variable tests
+var sample945 = 945
+var dropdown = d3.select("#selDataset");
+  console.log(`dropdown value: ${dropdown}`);
+
+
+
+
+      //  function buildPlot() {
+      // Fetch the JSON data and send to console log. This will contain entire data set
+d3.json("samples.json").then(function(data) {
+    console.log(`data: ${data}`);
+// appends name:id to html <select> and appeds each id number as an option
+    data.names.forEach(i => 
+      d3.select("select").append("option").text(i).property("value", i)
+      );
+      var selectID = dropdown.property("value");
+      dropdown.on("change", plot(selectID));  
+});
+
+
+
+/* get metadata for id
 function mData(){
   
     // Grab values from the data json object to build the plots
@@ -32,27 +32,35 @@ function mData(){
         var bbtype = mData.metadata.bbtype;
         var wfreq = mData.metadata.wfreq;
     // Associate data from above with key pair below
-
+    d3.select("#sample-metadata").append("h6").text(id)
+    d3.select("#sample-metadata").append("h6").text(id)
+    d3.select("#sample-metadata").append("h6").text(id)
+    d3.select("#sample-metadata").append("h6").text(id)
 
     // ##### html target where data above must be placed
 
     //<div id="sample-metadata" class="panel-body"></div>    
-}
-      
+    };
+      */
 
 
 // sets up bar plot
-function buildPlot(samples){ 
-        d3.select ("#bar").html("") 
-        d3.json("samples.json").then(function(data) {
-        var sampleValues = data.samples.filter (i => i.id == samples)[0];
+function plot(samples){ 
+  d3.select ("#bar").html("") 
+  d3.json("samples.json").then(function(data) {
+    var sampleValues = data.samples.filter (i => i.id == samples)[0];
 
-        console.log(sampleValues);
-        console.log(`samples value: ${samples}`);
-        //
+    console.log(sampleValues);
+    console.log(`samples value: ${samples}`);
+
+        //x any y plots for bar
     var otuIDS = sampleValues.otu_ids.slice(0, 10).reverse();
     var sample_X = sampleValues.sample_values.slice(0, 10).reverse();
     console.log(otuIDS);
+    // x and y plots for buble
+    var bubleX = sampleValues.otu_ids
+    var bubleY = sampleValues.sample_values
+
         // Trace1 for bar graph
     var trace1 = {
       x: sample_X,
@@ -80,32 +88,32 @@ function buildPlot(samples){
     // Render the plot to the div tag with id "plot"
     Plotly.newPlot("bar", data, layout);
 
-          })
+         // })
 
-      // The bubble chart
-      
-      var trace1 = {
-        x: samples.otu_ids,
-        y: sampleValues.sample_values,
-        mode: 'markers',
-        marker: {
-          size: sampleValues.sample_values
-        }
-      };
-      
-      var data = [trace1];
-      
-      var layout = {
-        title: 'Marker Size',
-        showlegend: false,
-        height: 600,
-        width: 600
-      };
+    // The bubble chart
+    // x an y are not being picked up ********************
+    var trace1 = {
+      x: otuIDS,
+      y: sample_X,
+      mode: 'markers',
+      marker: {
+        size: sample_X
+      }
+    };
+    
+    var data = [trace1];
+    
+    var layout = {
+      title: 'Marker Size',
+      showlegend: false,
+      height: 600,
+      width: 600
+    };
 
     Plotly.newPlot('bubble', data, layout);
-                      
-    
-    console.log(`sample_values:${sampleValues.sample_values}`);
+  });               
+  
+  
 
 
 
