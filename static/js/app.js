@@ -17,33 +17,35 @@ d3.json("samples.json").then(function(data) {
       );
       var selectID = dropdown.property("value");
       dropdown.on("change", plot(selectID)); 
-      dropdown.on("change", mData(selectID)); 
-
+      dropdown.on("change", mData(id)); 
+      console.log(`id3: ${id}`);
 });
 
 
 
 // get metadata for id
-function mData(samples){
+function mData(id){
   
     // Grab values from the data json object to build the plots
-    //var id = mData.metadata.id;
-    var ethnicity = mData.metadata.ethnicity;
-    var startDate = mData.metadata.gender;
-    var location = mData.metadata.location;
-    var bbtype = mData.metadata.bbtype;
-    var wfreq = mData.metadata.wfreq;
+    var id = mData.metadata.id;
+    //var ethnicity = mData.metadata.ethnicity;
+    console.log(`id1: ${id}`)
+    //var startDate = mData.metadata.gender;
+    //var location = mData.metadata.location;
+    //var bbtype = mData.metadata.bbtype;
+    //var wfreq = mData.metadata.wfreq;
     // Associate data from above with key pair below
-    d3.select("#sample-metadata").append("h6").text(ethnicity)
-    d3.select("#sample-metadata").append("h6").text(startDate)
-    d3.select("#sample-metadata").append("h6").text(location)
-    d3.select("#sample-metadata").append("h6").text(bbtype)
-    d3.select("#sample-metadata").append("h6").text(wfreq)
+    d3.select("#sample-metadata").append("panel-body").text(id);
+    //d3.select("#sample-metadata").append("panel-body").text(ethnicity);
+    //d3.select("#sample-metadata").append("panel-body").text(startDate);
+    //d3.select("#sample-metadata").append("panel-body").text(location);
+    //d3.select("#sample-metadata").append("panel-body").text(bbtype);
+    //d3.select("#sample-metadata").append("panel-body").text(wfreq);
 
     // ##### html target where data above must be placed
-      console.log(`eth: ${ethnicity}`)
+    console.log(`id2: ${id}`);
     //<div id="sample-metadata" class="panel-body"></div>    
-};
+  };
     
 
 
@@ -59,6 +61,7 @@ function plot(samples){
         //x any y plots for bar
     var otuIDS = sampleValues.otu_ids.slice(0, 10).reverse();
     var sample_X = sampleValues.sample_values.slice(0, 10).reverse();
+    var prNames = sampleValues.otu_labels.slice(0,10).reverse();
     console.log(otuIDS);
     // x and y plots for buble
     var bubleX = sampleValues.otu_ids
@@ -102,7 +105,9 @@ function plot(samples){
       marker: {
         size: sample_X,
         color: otuIDS
-      }
+      },
+      text: prNames
+
     };
     
     var data = [trace1];
@@ -110,7 +115,7 @@ function plot(samples){
     var layout = {
       xaxis:{title: "OTU ID"},
       yaxis:{title: "Sample Values"},
-      title: 'Bacteria Quantaties',
+      title: 'Bacteria Quantities ',
       showlegend: false,
       height: 600,
       width: 600
