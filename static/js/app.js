@@ -16,32 +16,35 @@ d3.json("samples.json").then(function(data) {
       d3.select("select").append("option").text(i).property("value", i)
       );
       var selectID = dropdown.property("value");
-      dropdown.on("change", plot(selectID));  
+      dropdown.on("change", plot(selectID)); 
+      dropdown.on("change", mData(selectID)); 
+
 });
 
 
 
-/* get metadata for id
-function mData(){
+// get metadata for id
+function mData(samples){
   
     // Grab values from the data json object to build the plots
-        var id = mData.metadata.id;
-        var ethnicity = mData.metadata.ethnicity;
-        var startDate = mData.metadata.gender;
-        var location = mData.metadata.location;
-        var bbtype = mData.metadata.bbtype;
-        var wfreq = mData.metadata.wfreq;
+    //var id = mData.metadata.id;
+    var ethnicity = mData.metadata.ethnicity;
+    var startDate = mData.metadata.gender;
+    var location = mData.metadata.location;
+    var bbtype = mData.metadata.bbtype;
+    var wfreq = mData.metadata.wfreq;
     // Associate data from above with key pair below
-    d3.select("#sample-metadata").append("h6").text(id)
-    d3.select("#sample-metadata").append("h6").text(id)
-    d3.select("#sample-metadata").append("h6").text(id)
-    d3.select("#sample-metadata").append("h6").text(id)
+    d3.select("#sample-metadata").append("h6").text(ethnicity)
+    d3.select("#sample-metadata").append("h6").text(startDate)
+    d3.select("#sample-metadata").append("h6").text(location)
+    d3.select("#sample-metadata").append("h6").text(bbtype)
+    d3.select("#sample-metadata").append("h6").text(wfreq)
 
     // ##### html target where data above must be placed
-
+      console.log(`eth: ${ethnicity}`)
     //<div id="sample-metadata" class="panel-body"></div>    
-    };
-      */
+};
+    
 
 
 // sets up bar plot
@@ -97,14 +100,17 @@ function plot(samples){
       y: sample_X,
       mode: 'markers',
       marker: {
-        size: sample_X
+        size: sample_X,
+        color: otuIDS
       }
     };
     
     var data = [trace1];
     
     var layout = {
-      title: 'Marker Size',
+      xaxis:{title: "OTU ID"},
+      yaxis:{title: "Sample Values"},
+      title: 'Bacteria Quantaties',
       showlegend: false,
       height: 600,
       width: 600
