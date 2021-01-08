@@ -19,13 +19,20 @@ d3.json("samples.json").then(function(data) {
       d3.select("select").append("option").text(i).property("value", i)
       );
       var selectID = dropdown.property("value");
-      dropdown.on("change", plot(selectID)); 
-      dropdown.on("change", getInfo(selectID));
+      dropdown.on("change", crazyIdea(selectID)); 
+      //dropdown.on("change", getInfo(selectID));
       // call the functions to display the data and the plots to the page
 
-      
-
+    
 });
+// input HTML data into plot and meta data function. 
+function crazyIdea(selectID){
+  plot(selectID); 
+  metaData(selectID);
+
+
+};
+
 
 //            PLOTS: Bar and Bubble
 //#######################################################
@@ -111,7 +118,7 @@ function plot(samples){
 // Test Subject ID NO
 //###############################################################
     // create the function to get the necessary data
-    function getInfo(id) {
+    function metaData(id) {
       // read the json file to get data and creartes an function data1 that filters data
       d3.json("data/samples.json").then(function(data1) {
           
