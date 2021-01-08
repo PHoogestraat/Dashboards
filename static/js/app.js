@@ -54,7 +54,11 @@ function plot(samples){
         var otuIDS = sampleValues.otu_ids.slice(0, 10).reverse();
         var sample_X = sampleValues.sample_values.slice(0, 10).reverse();
         var prNames = sampleValues.otu_labels.slice(0,10).reverse();
-        console.log(otuIDS);
+
+        // for wash guage
+        var wfreq = data.metadata.filter (d => d.wfreq == samples)[0];
+        console.log(wfreq);
+        console.log(`Washing Freq: ${wfreq}`)
 
 
             // Trace1 for bar graph
@@ -113,6 +117,23 @@ function plot(samples){
 
       Plotly.newPlot('bubble', data, layout);
     });               
+    //GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+    // The wash Guage
+    var data = [
+	          {
+                    domain: { x: [0, 1], y: [0, 1] },
+                    // this needs to be wash value
+                    
+                    //value: parseInt(wfreq),
+                    value: 5,
+                    title: { text: "Scrubs Per Week" },
+                    type: "indicator",
+                    mode: "gauge+number"
+	          }
+          ];
+
+          var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+          Plotly.newPlot('gauge', data, layout);
 
 };
         
