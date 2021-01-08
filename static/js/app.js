@@ -1,6 +1,8 @@
 // 
 //variable tests
 var sample945 = 945
+
+// Setup Dropdown Variable
 var dropdown = d3.select("#selDataset");
   console.log(`dropdown value: ${dropdown}`);
 
@@ -8,8 +10,8 @@ var dropdown = d3.select("#selDataset");
 
 
 
-      //  function buildPlot() {
-      // Fetch the JSON data and send to console log. This will contain entire data set
+      
+  // Fetch the JSON data and send to console log. This will contain entire data set
 d3.json("samples.json").then(function(data) {
     console.log(`data default pull id:940 : ${data}`);
 // appends name:id to html <select> and appeds each id number as an option
@@ -19,42 +21,14 @@ d3.json("samples.json").then(function(data) {
       var selectID = dropdown.property("value");
       dropdown.on("change", plot(selectID)); 
       dropdown.on("change", getInfo(selectID));
-      
+      // call the functions to display the data and the plots to the page
+
       
 
 });
 
-//###############################################################
-    // create the function to get the necessary data
-function getInfo(id) {
-  // read the json file to get data and creartes an function data1 that filters data
-  d3.json("data/samples.json").then(function(data1) {
-      
-        // Get the metadata info for the demographic panel
-        var metadata = data1.metadata;
-
-        //console.log(metadata);
-        
-        console.log(`id3: ${id}`);
-        // filter meta data info by id PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
-        var result = metadata.filter(meta => meta.id.toString() == id)[0];
-        
-        console.log(`meta3: ${result}`);
-        
-        // select demographic panel to put data
-        var demographicInfo = d3.select("#sample-metadata");
-        
-        // empty the demographic info panel each time before getting new id info
-        demographicInfo.html("");
-
-        // grab the necessary demographic data data for the id and append the info to the panel
-        Object.entries(result).forEach((key) => {   
-                demographicInfo.append("h5").text(key[0] + ": " + key[1] + "\n");    
-      });
-  });
-}
-//#########################################################################
-
+//            PLOTS: Bar and Bubble
+//#######################################################
 // sets up bar plot
 function plot(samples){ 
   // 
@@ -131,13 +105,38 @@ function plot(samples){
 
       Plotly.newPlot('bubble', data, layout);
     });               
-  
-  
-
-
-
 
 };
         
-
+// Test Subject ID NO
+//###############################################################
+    // create the function to get the necessary data
+    function getInfo(id) {
+      // read the json file to get data and creartes an function data1 that filters data
+      d3.json("data/samples.json").then(function(data1) {
+          
+            // Get the metadata info for the demographic panel
+            var metadata = data1.metadata;
+    
+            //console.log(metadata);
+            
+            console.log(`id3: ${id}`);
+            // filter meta data info by id Problem area
+            var result = metadata.filter(meta => meta.id.toString() == id)[0];
+            
+            console.log(`meta3: ${result}`);
+            
+            // select demographic panel to put data
+            var demographicInfo = d3.select("#sample-metadata");
+            
+            // empty the demographic info panel each time before getting new id info
+            demographicInfo.html("");
+    
+            // grab the necessary demographic data data for the id and append the info to the panel
+            Object.entries(result).forEach((key) => {   
+                    demographicInfo.append("h5").text(key[0] + ": " + key[1] + "\n");    
+          });
+      });
+    }
+    //#########################################################################
   
