@@ -7,35 +7,69 @@ var dropdown = d3.select("#selDataset");
 
 
 
+
       //  function buildPlot() {
       // Fetch the JSON data and send to console log. This will contain entire data set
 d3.json("samples.json").then(function(data) {
-    console.log(`data: ${data}`);
+    console.log(`data default pull id:940 : ${data}`);
 // appends name:id to html <select> and appeds each id number as an option
     data.names.forEach(i => 
       d3.select("select").append("option").text(i).property("value", i)
       );
       var selectID = dropdown.property("value");
       dropdown.on("change", plot(selectID)); 
-      dropdown.on("change", mData(id)); 
+      dropdown.on("change", getInfo(selectID));
+      
       console.log(`id3: ${id}`);
+
 });
+
+//###############################################################
+    // create the function to get the necessary data
+function getInfo(id) {
+  // read the json file to get data
+  d3.json("data/samples.json").then((data)=> {
+      
+        // get the metadata info for the demographic panel
+        var metadata = data.metadata;
+
+        console.log(metadata)
+
+        // filter meta data info by id
+        var result = metadata.filter(meta => meta.id.toString() === id)[0];
+
+        // select demographic panel to put data
+        var demographicInfo = d3.select("#sample-metadata");
+        
+        // empty the demographic info panel each time before getting new id info
+        demographicInfo.html("");
+
+        // grab the necessary demographic data data for the id and append the info to the panel
+        Object.entries(result).forEach((key) => {   
+                demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
+      });
+  });
+}
+//#########################################################################
+
+
 
 
 
 // get metadata for id
-function mData(id){
-  
+function mData(metaID){
+
+    
     // Grab values from the data json object to build the plots
-    var id = mData.metadata.id;
+    var id = data.metadata.metaID.id[0];
     //var ethnicity = mData.metadata.ethnicity;
-    console.log(`id1: ${id}`)
+    console.log(`id1: ${id}`);
     //var startDate = mData.metadata.gender;
     //var location = mData.metadata.location;
     //var bbtype = mData.metadata.bbtype;
     //var wfreq = mData.metadata.wfreq;
     // Associate data from above with key pair below
-    d3.select("#sample-metadata").append("panel-body").text(id);
+    d3.select("#sample-metadata").append("h6").text(id);
     //d3.select("#sample-metadata").append("panel-body").text(ethnicity);
     //d3.select("#sample-metadata").append("panel-body").text(startDate);
     //d3.select("#sample-metadata").append("panel-body").text(location);
@@ -46,7 +80,9 @@ function mData(id){
     console.log(`id2: ${id}`);
     //<div id="sample-metadata" class="panel-body"></div>    
   };
-    
+  
+  // create the function to get the necessary data
+
 
 
 // sets up bar plot
@@ -63,9 +99,7 @@ function plot(samples){
     var sample_X = sampleValues.sample_values.slice(0, 10).reverse();
     var prNames = sampleValues.otu_labels.slice(0,10).reverse();
     console.log(otuIDS);
-    // x and y plots for buble
-    var bubleX = sampleValues.otu_ids
-    var bubleY = sampleValues.sample_values
+
 
         // Trace1 for bar graph
     var trace1 = {
