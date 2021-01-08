@@ -21,6 +21,7 @@ d3.json("samples.json").then(function(data) {
       var selectID = dropdown.property("value");
       dropdown.on("change", crazyIdea(selectID)); 
       //dropdown.on("change", getInfo(selectID));
+      //dropdown.on("change", metaData(selectID));
       // call the functions to display the data and the plots to the page
 
     
